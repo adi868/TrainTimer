@@ -1,100 +1,100 @@
-<script>
-// Assume the following situations.
-
-// (TEST 1)
-// First Train of the Day is 3:00 AM
-// Assume Train comes every 3 minutes.
-// Assume the current time is 3:16 AM....
-// What time would the next train be...? (Use your brain first)
-// It would be 3:18 -- 2 minutes away
-
-// (TEST 2)
-// First Train of the Day is 3:00 AM
-// Assume Train comes every 7 minutes.
-// Assume the current time is 3:16 AM....
-// What time would the next train be...? (Use your brain first)
-// It would be 3:21 -- 5 minutes away
 
 
-// ==========================================================
+   // Your web app's Firebase configuration
+   var firebaseConfig = {
+    apiKey: "AIzaSyD28uSCKgqakhIMx7QbRGh467YgPV7eU3I",
+    authDomain: "trainschedule-bcb72.firebaseapp.com",
+    databaseURL: "https://trainschedule-bcb72.firebaseio.com",
+    projectId: "trainschedule-bcb72",
+    storageBucket: "trainschedule-bcb72.appspot.com",
+    messagingSenderId: "681248701692",
+    appId: "1:681248701692:web:e67e6af0d9b25ff0"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
 
-// Solved Mathematically
-// Test case 1:
-// 16 - 00 = 16
-// 16 % 3 = 1 (Modulus is the remainder)
-// 3 - 1 = 2 minutes away
-// 2 + 3:16 = 3:18
+  // Create a variable to reference the database.
+  var database = firebase.database();
 
-// Solved Mathematically
-// Test case 2:
-// 16 - 00 = 16
-// 16 % 7 = 2 (Modulus is the remainder)
-// 7 - 2 = 5 minutes away
-// 5 + 3:16 = 3:21
+  database.ref("/train_schedule").on(
+    "child_added",
+    function(snapshot) {
+      var trainInfo = snapshot.val();
+      console.log(trainInfo);
 
-// Assumptions
-var tFrequency = 3;
+      var newRow = $("<tr>");
+      var nameCol = $("<td>").attr("class", "train-name");
+      var destinationCol = $("<td>").attr("class", "train-destination");
+      var frequencyCol = $("<td>").attr("class", "train-frequency");
+      var firstTrain = moment(trainInfo.trainFirst, "HH:mm").subtract(
+        1,
+        "months",
+        console.log("FIRST TRAIN", firstTrain)
+      );
 
-// Time is 3:30 AM
-var firstTime = "03:30";
+      $(nameCol).html(trainInfo.trainName);
+      $(destinationCol).html(trainInfo.trainDestination);
+      $(frequencyCol).html(trainInfo.trainFrequency);
 
-// First Time (pushed back 1 year to make sure it comes before current time)
-var firstTimeConverted = moment(firstTime, "HH:mm").subtract(1, "years");
-console.log(firstTimeConverted);
+      
+      var now = moment();
+      console.log(now);
+      var difference = moment().diff(moment(firstTrain), "minutes");
+      console.log("Difference: ", difference);
+      var remainder = difference % trainInfo.trainFrequency;
+      console.log(remainder);
+      var minutes = trainInfo.trainFrequency - remainder;
 
-// Current Time
-var currentTime = moment();
-console.log("CURRENT TIME: " + moment(currentTime).format("hh:mm"));
+      var minutesCol = $("<td>").attr("class", "minutes-away");
+      $(minutesCol).html(minutes);
 
-// Difference between the times
-var diffTime = moment().diff(moment(firstTimeConverted), "minutes");
-console.log("DIFFERENCE IN TIME: " + diffTime);
+      var newTrain = moment().add(minutes, "minutes");
+      var newTrainFormat = moment(newTrain).format("HH:mm");
+      console.log("NEW TIME FORMAT!!", newTrainFormat);
+      var newTrainCol = $("<td>").attr("class", "train-next");
+      newTrainCol.html(newTrainFormat);
+      
 
-// Time apart (remainder)
-var tRemainder = diffTime % tFrequency;
-console.log(tRemainder);
+      newRow.append(
+        nameCol,
+        destinationCol,
+        frequencyCol,
+        minutesCol,
+        newTrainCol
+      );
 
-// Minute Until Train
-var tMinutesTillTrain = tFrequency - tRemainder;
-console.log("MINUTES TILL TRAIN: " + tMinutesTillTrain);
+      $("#train-scheduler").append(newRow);
+    },
+    function(errorObject) {
+      console.log("The read failed: " + errorObject.code);
+    }
+  );
 
-// Next Train
-var nextTrain = moment().add(tMinutesTillTrain, "minutes");
-console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
-</script>
+  $("#add-train-btn").on("click", function(event) {
+    event.preventDefault();
+    console.log("button clicked ayy!");
 
+    var trainName = $("#train-name-input").val().trim();
+    var trainDestination = $("#location-input").val().trim();
+    var trainFrequency = $("#frequency-input").val().trim();
+    var trainFirst = $("#start-input").val().trim();
+    console.log("FIRST RUN: ", trainFirst);
 
+    console.log("ONCLICK TRAIN FREQUENCY!", trainFrequency);
 
-<script>
-    var randomDate = "02/23/1999";
-    var randomFormat = "MM/DD/YYYY";
-    var convertedDate = moment(randomDate, randomFormat);
+    database.ref("/train_schedule").push({
+      trainName: trainName,
+      trainDestination: trainDestination,
+      trainFrequency: trainFrequency,
+      trainFirst: trainFirst
+    });
+  });
 
-    // Using scripts from moment.js write code below to complete each of the following.
-    // Console.log to confirm the code changes you made worked.
+//date code
 
-    // 1 ...to convert the randomDate into three other date formats
-    console.log(convertedDate.format("MM/DD/YY"));
-    console.log(convertedDate.format("MMM Do, YYYY hh:mm:ss"));
-    console.log(convertedDate.format("X"));
-    console.log("----------------------------------------");
+// date = "03/12/2019";
+// format = "MM/DD/YYYY";
+// convertedDate = moment(date, "MM/DD/YYYY");
 
-    // 2 ...to determine the time in years, months, days between today and the randomDate
-    console.log(convertedDate.toNow());
-    console.log(convertedDate.diff(moment(), "years"));
-    console.log(convertedDate.diff(moment(), "months"));
-    console.log(convertedDate.diff(moment(), "days"));
-    console.log("----------------------------------------");
-
-    // 3 ...to determine the number of days between the randomDate and 02/14/2001
-    var newDate = moment("02/14/2001", randomFormat);
-    console.log(convertedDate.diff(newDate, "days"));
-
-    // 4 ...to convert the randomDate to unix time (be sure to look up what unix time even is!!!)
-    console.log(convertedDate.format("X"));
-    console.log("----------------------------------------");
-
-    // 5 ...to determine what day of the week and what week of the year this randomDate falls on.
-    console.log(convertedDate.format("DDD"));
-    console.log(convertedDate.format("dddd"));
-  </script>
+// convertedDate.diff(moment(), "days");
+//timeNow = moment().format("MMM Do, YYYY hh:mm:ss");

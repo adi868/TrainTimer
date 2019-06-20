@@ -14,7 +14,7 @@
  // Create a variable to reference the database.
  var database = firebase.database();
 
- ///working///////////////////////////////////////////////////////////////////
+ ///////////////////////////////////////////////////////////////////
  //add new information with button
  $("#add-train-btn").on("click", function (event) {
    event.preventDefault();
@@ -53,14 +53,20 @@
 
 
  // Create Firebase event for adding train to the database and a row in the html when a user adds an entry
- database.ref().on("child_added", function (childSnapshot) {
-   var trainInfo = childSnapshot.val();
+ database.ref().on("child_added", function (snapshot) {
+   var trainInfo = snapshot.val();
    console.log(trainInfo);
 
-   var trainName = childSnapshot.val().name;
-   var trainDestination = childSnapshot.val().location;
-   var trainFirst = childSnapshot.val().first;
-   var trainFrequency = childSnapshot.val().frequency;
+   var trainName = $("#train-name-input").val();
+   var trainDestination = $("#location-input").val();
+   var trainFirst = $("#start-input").val();
+   var trainFrequency = $("#frequency-input").val();
+
+
+  //  var trainName = snapshot.val().name;
+  //  var trainDestination = snapshot.val().location;
+  //  var trainFirst = snapshot.val().first;
+  //  var trainFrequency = snapshot.val().frequency;
 
    console.log(trainName);
    console.log(trainDestination);
@@ -69,13 +75,16 @@
 
    //create the new row
    var newRow = $("<tr>");
-   var nameCol = $("<td>").attr("class", "train-name");
-   var destinationCol = $("<td>").attr("class", "train-destination");
-   var frequencyCol = $("<td>").attr("class", "train-frequency");
+  //  var nameCol = $("<td>").attr("class", "train-name");
+   var nameCol = $("<td>").append(trainName);
+  //  var destinationCol = $("<td>").attr("class", "train-destination");
+   var destinationCol = $("<td>").append(trainDestination);
+  //  var frequencyCol = $("<td>").attr("class", "train-frequency");
+   var frequencyCol = $("<td>").append(trainFrequency);
    var firstTrain = moment(trainInfo.trainFirst, "HH:mm").subtract(
      1,
      "months",
-     console.log("First Train is", firstTrain)
+     console.log("First Train is", trainFirst)
    );
 
    $(nameCol).html(trainInfo.trainName);

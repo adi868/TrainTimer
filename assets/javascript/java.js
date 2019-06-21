@@ -53,20 +53,20 @@
 
 
  // Create Firebase event for adding train to the database and a row in the html when a user adds an entry
- database.ref().on("child_added", function (snapshot) {
-   var trainInfo = snapshot.val();
+ database.ref().on("child_added", function (childSnapshot) {
+   var trainInfo = childSnapshot.val();
    console.log(trainInfo);
+   //removes the stored data
+   database.ref().remove()
+   //  var trainName = $("#train-name-input").val();
+   //  var trainDestination = $("#location-input").val();
+   //  var trainFirst = $("#start-input").val();
+   //  var trainFrequency = $("#frequency-input").val();
 
-   var trainName = $("#train-name-input").val();
-   var trainDestination = $("#location-input").val();
-   var trainFirst = $("#start-input").val();
-   var trainFrequency = $("#frequency-input").val();
-
-
-  //  var trainName = snapshot.val().name;
-  //  var trainDestination = snapshot.val().location;
-  //  var trainFirst = snapshot.val().first;
-  //  var trainFrequency = snapshot.val().frequency;
+   var trainName = childSnapshot.val().name;
+   var trainDestination = childSnapshot.val().location;
+   var trainFirst = childSnapshot.val().first;
+   var trainFrequency = childSnapshot.val().frequency;
 
    console.log(trainName);
    console.log(trainDestination);
@@ -74,52 +74,34 @@
    console.log(trainFrequency);
 
    //create the new row
-   var newRow = $("<tr>");
-  //  var nameCol = $("<td>").attr("class", "train-name");
-   var nameCol = $("<td>").append(trainName);
-  //  var destinationCol = $("<td>").attr("class", "train-destination");
-   var destinationCol = $("<td>").append(trainDestination);
-  //  var frequencyCol = $("<td>").attr("class", "train-frequency");
-   var frequencyCol = $("<td>").append(trainFrequency);
-   var firstTrain = moment(trainInfo.trainFirst, "HH:mm").subtract(
-     1,
-     "months",
-     console.log("First Train is", trainFirst)
+   var newRow = $("<tr>").append(
+     $("<td>").html(trainName),
+     $("<td>").html(trainDestination),
+     $("<td>").html(trainFirst),
+     $("<td>").html(trainFrequency),
    );
 
-   $(nameCol).html(trainInfo.trainName);
-   $(destinationCol).html(trainInfo.trainDestination);
-   $(frequencyCol).html(trainInfo.trainFrequency);
-
-
-   var now = moment();
-   console.log(now);
-   var difference = moment().diff(moment(firstTrain), "minutes");
-   console.log("Difference: ", difference);
-   var remainder = difference % trainInfo.trainFrequency;
-   console.log(remainder);
-   var minutes = trainInfo.trainFrequency - remainder;
-
-   var minutesCol = $("<td>").attr("class", "minutes-away");
-   $(minutesCol).html(minutes);
-
-   var newTrain = moment().add(minutes, "minutes");
-   var newTrainFormat = moment(newTrain).format("HH:mm");
-   console.log("NEW TIME FORMAT!!", newTrainFormat);
-   var newTrainCol = $("<td>").attr("class", "train-next");
-   newTrainCol.html(newTrainFormat);
-
-
-   newRow.append(
-     nameCol,
-     destinationCol,
-     frequencyCol,
-     minutesCol,
-     newTrainCol
-   );
-   //append the new row to the table
+   // Append the new row to the table
    $("#train-scheduler").append(newRow);
  });
+
+ //  var now = moment();
+ //  console.log(now);
+ //  var difference = moment().diff(moment(firstTrain), "minutes");
+ //  console.log("Difference: ", difference);
+ //  var remainder = difference % trainInfo.trainFrequency;
+ //  console.log(remainder);
+ //  var minutes = trainInfo.trainFrequency - remainder;
+
+ //  var minutesCol = $("<td>").attr("class", "minutes-away");
+ //  $(minutesCol).html(minutes);
+
+ //  var newTrain = moment().add(minutes, "minutes");
+ //  var newTrainFormat = moment(newTrain).format("HH:mm");
+ //  console.log("NEW TIME FORMAT!!", newTrainFormat);
+ //  var newTrainCol = $("<td>").attr("class", "train-next");
+ //  newTrainCol.html(newTrainFormat);
+
 
  //date code
 

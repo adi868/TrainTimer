@@ -73,19 +73,39 @@
    console.log(trainFirst);
    console.log(trainFrequency);
 //calculate the next time for the train to arrive
-var nextArrive = 0
+var initialCalcArrive = moment(trainFirst, "HH:mm").subtract(1, "years");
+console.log(initialCalcArrive)
+//get the current time
+var currentTime = moment();
+console.log("Current time is: "+ moment(currentTime).format("hh:mm"));
 
-//calculate the minutes away for the train
-var minAway = 0
+//gets the difference between the minutes
+var diffTime = moment().diff(moment(initialCalcArrive), "minutes");
+console.log("Difference in time: " + diffTime);
+
+//calculates the time apart(the remainder)
+var tRemainder = diffTime % trainFrequency;
+console.log (tRemainder);
+
+//the number of minutes until the next train
+var minAway = trainFrequency - tRemainder;
+console.log("Train minutes away: " + minAway)
+
+//time that the next train arrives
+var nextArrive = moment().add(minAway, "minutes");
+var nextTrainFormat = moment(nextArrive).format("hh:mm");
+console.log("Arrival time for the next train is: " + moment(nextArrive).format("hh:mm"));
+
    //create the new row
    var newRow = $("<tr>").append(
      $("<td>").html(trainName),
      $("<td>").html(trainDestination),
      $("<td>").html(trainFrequency),
-     $("<td>").html(nextArrive),
+     $("<td>").html(nextTrainFormat),
      $("<td>").html(minAway),
    );
 
    // Append the new row to the table
    $("#train-scheduler").append(newRow);
+   
  });

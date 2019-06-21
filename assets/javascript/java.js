@@ -72,42 +72,20 @@
    console.log(trainDestination);
    console.log(trainFirst);
    console.log(trainFrequency);
+//calculate the next time for the train to arrive
+var nextArrive = 0
 
+//calculate the minutes away for the train
+var minAway = 0
    //create the new row
    var newRow = $("<tr>").append(
      $("<td>").html(trainName),
      $("<td>").html(trainDestination),
-     $("<td>").html(trainFirst),
      $("<td>").html(trainFrequency),
+     $("<td>").html(nextArrive),
+     $("<td>").html(minAway),
    );
 
    // Append the new row to the table
    $("#train-scheduler").append(newRow);
  });
-
- //  var now = moment();
- //  console.log(now);
- //  var difference = moment().diff(moment(firstTrain), "minutes");
- //  console.log("Difference: ", difference);
- //  var remainder = difference % trainInfo.trainFrequency;
- //  console.log(remainder);
- //  var minutes = trainInfo.trainFrequency - remainder;
-
- //  var minutesCol = $("<td>").attr("class", "minutes-away");
- //  $(minutesCol).html(minutes);
-
- //  var newTrain = moment().add(minutes, "minutes");
- //  var newTrainFormat = moment(newTrain).format("HH:mm");
- //  console.log("NEW TIME FORMAT!!", newTrainFormat);
- //  var newTrainCol = $("<td>").attr("class", "train-next");
- //  newTrainCol.html(newTrainFormat);
-
-
- //date code
-
- // date = "03/12/2019";
- // format = "MM/DD/YYYY";
- // convertedDate = moment(date, "MM/DD/YYYY");
-
- // convertedDate.diff(moment(), "days");
- //timeNow = moment().format("MMM Do, YYYY hh:mm:ss");

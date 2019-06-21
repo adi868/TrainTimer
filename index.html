@@ -27,22 +27,26 @@
     <!-- Jumbotron -->
     <div class="jumbotron" style="background-color:black; color: white">
       <h1 class="text-center">Track That Train</h1>
-      <h5 class="text-center">Get access to up-to-date information about trains and arrival times. Plan your train-ing in STYLE</h5>
+      <h5 class="text-center">Get access to up-to-date information about trains and arrival times. Plan your train-ing
+        in STYLE</h5>
     </div>
 
     <div class="row">
       <div class="col-md-12">
+        <!-- sets margin bottom  -->
         <div class="card mb-4">
           <div class="card-header">Current Train Schedule</div>
           <div class="card-body">
             <table class="table table-sm table-hover" id='train-table'>
               <thead>
                 <tr>
+                  <!-- table row, table header -->
+                  <!-- scope specifies they are header cells for columns -->
                   <th scope="col">Train Name</th>
                   <th scope="col">Destination</th>
                   <th scope="col">Frequency (min)</th>
-                  <th scope="col">Next Arrival</th>
-                  <th scope="col">Minutes Away</th>
+                  <th scope="col" id="calculateArrive">Next Arrival</th>
+                  <th scope="col" id="calculateAway">Minutes Away</th>
                 </tr>
               </thead>
               <tbody id='train-scheduler'>
@@ -94,4 +98,3 @@
 </body>
 
 </html>
-

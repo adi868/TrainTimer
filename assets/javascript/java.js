@@ -1,4 +1,5 @@
  // Web app's Firebase configuration
+ //this is the personal firebase link
  var config = {
    apiKey: "AIzaSyD28uSCKgqakhIMx7QbRGh467YgPV7eU3I",
    authDomain: "trainschedule-bcb72.firebaseapp.com",

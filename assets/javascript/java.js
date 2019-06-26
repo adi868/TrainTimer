@@ -78,10 +78,10 @@ var initialCalcArrive = moment(trainFirst, "HH:mm").subtract(1, "years");
 console.log(initialCalcArrive)
 //get the current time
 var currentTime = moment();
-console.log("Current time is: "+ moment(currentTime).format("hh:mm"));
+console.log("Current time is: "+ currentTime.format("hh:mm"));
 
 //gets the difference between the minutes
-var diffTime = moment().diff(moment(initialCalcArrive), "minutes");
+var diffTime = currentTime.diff(initialCalcArrive, "minutes");
 console.log("Difference in time: " + diffTime);
 
 //calculates the time apart(the remainder)

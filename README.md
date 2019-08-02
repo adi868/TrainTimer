@@ -5,13 +5,13 @@ Deploy this app at: https://adi868.github.io/TrainTimer/
 
 
 ## Technologies Used:
-JavaScript
-Firebase
-Moment.js
-HTML
-jQuery
-Bootstrap
-CSS
+* JavaScript
+* Firebase
+* Moment.js
+* HTML
+* jQuery
+* Bootstrap
+* CSS
 
 ### Developer:
 Adina Cianciotto

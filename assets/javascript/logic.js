@@ -42,7 +42,7 @@
    console.log(newInfo.location);
    console.log(newInfo.first);
 
-   alert("New train successfully added!");
+   alert("New Train Successfully Added!");
 
    // Clears all of the text-boxes
    $("#train-name-input").val("");

@@ -58,11 +58,11 @@
    var trainInfo = childSnapshot.val();
    console.log(trainInfo);
    //removes the stored data
-   //database.ref().remove()
-   //  var trainName = $("#train-name-input").val();
-   //  var trainDestination = $("#location-input").val();
-   //  var trainFirst = $("#start-input").val();
-   //  var trainFrequency = $("#frequency-input").val();
+   database.ref().remove()
+    var trainName = $("#train-name-input").val();
+    var trainDestination = $("#location-input").val();
+    var trainFirst = $("#start-input").val();
+    var trainFrequency = $("#frequency-input").val();
 
    var trainName = childSnapshot.val().name;
    var trainDestination = childSnapshot.val().location;

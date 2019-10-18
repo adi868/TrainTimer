@@ -13,6 +13,10 @@ Deploy this app at: https://adi868.github.io/TrainTimer/
 * Bootstrap
 * CSS
 
-### Developer:
-Adina Cianciotto
+#### Deployed Link: 
+[Train Timer](https://adi868.github.io/TrainTimer/)
+
+---
+© 2019 Adina Cianciotto adi868
+
 
